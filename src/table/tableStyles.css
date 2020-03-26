@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+.table {
+  margin: 25% auto;
+  background-color: #fafafa;
+  border-collapse: collapse;
+  font-family: "Arial", sans-serif;
+  color: #333333;
+}
+
+.table thead {
+  width: 100%;
+  background-color: #0099bc;
+  color: #fafafa;
+}
+
+.table th,
+.table td {
+  border: 1px solid #0099bc;
+}
+
+.table th {
+  padding: 15px 20px;
+}
+
+.table td {
+  padding: 10px 20px;
+}
