@@ -9,7 +9,7 @@ class Table extends Component {
 
     return (
       <table className={'table'}>
-        <TableHead headings={Object.keys(data[0])} />
+        <TableHead headings={this.props.columnNames} />
         <TableBody data={data} />
       </table>
     );

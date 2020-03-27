@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Icomoon';
+  font-weight: normal;
+  src: url("./assets/icomoon.woff"),
+       url("./assets/icomoon.ttf");
+}
+
 * {
   box-sizing: border-box;
 }

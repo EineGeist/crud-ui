@@ -3,7 +3,6 @@ import TableCell from './tableCell.js';
 
 class TableRow extends Component {
   renderCell = (content, i) => {
-    console.log(content)
     return <TableCell
       key={i}
       content={content}
@@ -12,7 +11,10 @@ class TableRow extends Component {
 
   render() {
     return (
-      <tr>
+      <tr
+        data-key={this.props.dataKey}
+        className={'table__row'}
+      >
         {this.props.data.map(this.renderCell)}
       </tr>
     );

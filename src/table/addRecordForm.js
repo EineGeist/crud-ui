@@ -19,11 +19,15 @@ class AddRecordForm extends Component {
   };
 
   render() {
+    const { labels } = this.props;
+
     return (
       <form>
-        {this.props.labels
+        {labels
           .slice(1) // weeds id off
-          .map(this.renderTextInput)}
+          .slice(0, labels.length - 2)
+          .map(this.renderTextInput)
+        }
 
         <div className={'add-record__btns'}>
           <input
