@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import TableRow from './tableRow.js';
 
 class TableBody extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: this.props.data,
-    };
-  }
-
   renderRow = (row, i) => {
-    const { data } = this.state;
+    const { data } = this.props;
+
     return <TableRow
       key={data[i].id}
       data={Object.values(data[i])}
@@ -21,7 +14,7 @@ class TableBody extends Component {
   render() {
     return (
       <tbody>
-        {this.state.data.map(this.renderRow)}
+        {this.props.data.map(this.renderRow)}
       </tbody>
     );
   }

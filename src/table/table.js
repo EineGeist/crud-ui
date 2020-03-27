@@ -4,7 +4,6 @@ import TableHead from './tableHead.js';
 import './tableStyles.css';
 
 class Table extends Component {
-
   render() {
     const { data } = this.props;
 
