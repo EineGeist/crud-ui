@@ -3,7 +3,7 @@
   background-color: transparent;
   border: 1px solid #0099bc;
 
-  font-size: 1.11em;
+  font-size: 1em;
 }
 
 .btn:hover {
@@ -16,7 +16,6 @@
 
 
 .table-container {
-  min-width: 250px;
   background-color: #fafafa;
 
   font-family: "Arial", sans-serif;
@@ -41,11 +40,11 @@
 }
 
 .table__header-cell {
-  padding: 15px 20px;
+  padding: 10px 15px;
 }
 
 .table__cell {
-  padding: 10px 20px;
+  padding: 5px 15px;
 }
 
 
@@ -72,7 +71,7 @@
   border-color: #0099bc;
 }
 
-.add-record__label {
+.add-record__fieldName {
   display: block;
   margin: 10px 5px;
   text-align: right;

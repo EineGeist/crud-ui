@@ -5,12 +5,12 @@ import './tableStyles.css';
 
 class Table extends Component {
   render() {
-    const { data } = this.props;
+    const { columnLabels, records } = this.props;
 
     return (
       <table className={'table'}>
-        <TableHead headings={this.props.columnNames} />
-        <TableBody data={data} />
+        <TableHead columnLabels={columnLabels} />
+        <TableBody records={records} />
       </table>
     );
   }

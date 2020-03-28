@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import TableCell from './tableCell.js';
 
 class TableRow extends Component {
-  renderCell = (content, i) => {
+  renderCell = (datum, i) => {
     return <TableCell
       key={i}
-      content={content}
+      datum={datum}
     />
   };
 
   render() {
+    const { record, dataKey } = this.props;
+
     return (
       <tr
-        data-key={this.props.dataKey}
+        data-key={dataKey}
         className={'table__row'}
       >
-        {this.props.data.map(this.renderCell)}
+        {record.map(this.renderCell)}
       </tr>
     );
   }

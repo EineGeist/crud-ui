@@ -5,14 +5,13 @@ class AddRecord extends Component {
   constructor(props) {
     super(props);
 
-    const { id, labels } = props;
+    const { fieldNames } = props;
 
-    const recordMap = createRecordMap(id, labels);
+    const dataMap = createDataMap(fieldNames);
     this.state = {
       showForm: false,
-      id: id,
-      labels: labels,
-      record: recordMap,
+      fieldNames: fieldNames,
+      data: dataMap,
     };
   }
 
@@ -23,30 +22,27 @@ class AddRecord extends Component {
   };
 
   handleInputChange = ({ target: { name, value } }) => {
-    const record =
-      new Map(this.state.record)
+    const data =
+      new Map(this.state.data)
         .set(name, value);
 
     this.setState({
-      record: record,
+      data: data,
     })
   };
 
   handleSubmit = e => {
     e.preventDefault();
-
-    const { record } = this.state;
-
     this.toggleShowForm();
-    this.props.addHandler(Object.fromEntries(record));
 
-    let { id, labels } = this.state;
-    id++;
+    const { fieldNames, data: inputData } = this.state;
 
-    const recordMap = createRecordMap(id, labels);
+    const data = Object.fromEntries(inputData);
+    this.props.addHandler(data);
+
+    const dataMap = createDataMap(fieldNames);
     this.setState({
-      id: id,
-      record: recordMap,
+      data: dataMap,
     })
   };
 
@@ -58,10 +54,10 @@ class AddRecord extends Component {
   };
 
   renderForm = () => {
-    const { labels } = this.state;
+    const { fieldNames } = this.state;
 
     return <AddRecordForm
-      labels={labels}
+      fieldNames={fieldNames}
       handleInputChange={this.handleInputChange}
       handleSubmit={this.handleSubmit}
       closeForm={this.toggleShowForm}
@@ -79,13 +75,13 @@ class AddRecord extends Component {
   }
 }
 
-function createRecordMap(id, names) {
-  const recordMap = [['id', id]];
-  for (let i = 1; i < names.length; i++) {
-    recordMap.push([names[i], null]);
+function createDataMap(fieldNames) {
+  const data = [];
+  for (let i = 0; i < fieldNames.length; i++) {
+    data.push([fieldNames[i], null]);
   }
 
-  return new Map(recordMap);
+  return new Map(data);
 }
 
 export default AddRecord;

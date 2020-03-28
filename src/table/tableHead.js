@@ -1,11 +1,13 @@
 import React from 'react';
 
 function TableHead(props) {
+  const { columnLabels } = props;
+
   return (
     <thead className={'table__header'}>
       <tr>
-        {props.headings.map((heading, i) =>
-          <th key={i} className={'table__header-cell'}>{heading}</th>)}
+        {columnLabels.map((label, i) =>
+          <th key={i} className={'table__header-cell'}>{label}</th>)}
       </tr>
     </thead>
   )

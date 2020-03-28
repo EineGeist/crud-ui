@@ -4,7 +4,7 @@ class AddRecordForm extends Component {
   renderTextInput = name => {
     return (
       <label
-        className={'add-record__label'}
+        className={'add-record__fieldName'}
         key={name}
       >
         {name}:
@@ -19,13 +19,11 @@ class AddRecordForm extends Component {
   };
 
   render() {
-    const { labels } = this.props;
+    const { fieldNames } = this.props;
 
     return (
       <form>
-        {labels
-          .slice(1) // weeds id off
-          .slice(0, labels.length - 2)
+        {fieldNames
           .map(this.renderTextInput)
         }
 
