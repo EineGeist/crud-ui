@@ -33,21 +33,23 @@ class TableContainer extends Component {
   unpackRecords = result => {
     let records = this.processRecords(result);
 
-    this.setColumnLabels(records);
+    const columnLabels = this.getColumnLabels(records);
 
     records = records.map(record => {
       const data = record.data;
 
-      this.columnLabels.forEach(label => {
+      columnLabels.forEach(label => {
+        console.log(label)
         if (data[label] === undefined) data[label] = null;
       });
 
       return record;
     });
-    this.addActionLabels();
 
     this.setState({
       records: records,
+      columnLabels: columnLabels
+        .concat(this.getActionLabels()),
     });
   };
 
@@ -82,7 +84,7 @@ class TableContainer extends Component {
     }, []);
   };
 
-  setColumnLabels = records => {
+  getColumnLabels = records => {
     const { headings } = this.props;
     const labels = new Set();
 
@@ -98,13 +100,11 @@ class TableContainer extends Component {
       }
     });
 
-    this.columnLabels = Array(...labels);
+    return Array(...labels);
   };
 
-  addActionLabels = () => {
-    this.columnLabels = this.columnLabels.concat(
-      Array(this.actionsAmount).fill(null)
-    );
+  getActionLabels = () => {
+    return Array(this.actionsAmount).fill(null)
   };
 
 
@@ -145,8 +145,8 @@ class TableContainer extends Component {
 
 
   renderAddRecord = () => {
-    const { columnLabels, actionsAmount } = this;
-    const { records } = this.state;
+    const { actionsAmount } = this;
+    const { columnLabels, records } = this.state;
 
     // weeds actions off
     const filedNames = columnLabels
@@ -161,12 +161,12 @@ class TableContainer extends Component {
 
   render() {
     if (!this.state.records) return null;
-    const { records } = this.state;
+    const { records, columnLabels } = this.state;
 
     return (
       <div className={'table-container'} onClick={this.handleDelete}>
         <Table
-          columnLabels={this.columnLabels}
+          columnLabels={columnLabels}
           records={records}
         />
 
