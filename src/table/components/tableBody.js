@@ -3,12 +3,13 @@ import TableRow from './tableRow.js';
 
 class TableBody extends Component {
   renderRow = (row, i) => {
-    const { _id, data } = this.props.records[i];
+    const record = this.props.records[i];
+    const { _id, data } = record;
 
     return <TableRow
       key={_id}
-      dataKey={_id}
-      record={Object.values(data)}
+      id={_id}
+      data={data}
     />
   };
 

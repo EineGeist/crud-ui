@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import Table from './table.js';
 import AddRecord from "./addRecord.js";
 
-import requests from "./requests.js";
+import requests from "../requests.js";
 
 
 class TableContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      records: [],
+    }
+  }
+
+  actionsAmount = 2;
+
   componentDidMount = () => {
     this.loadRecords();
   };
@@ -23,11 +33,18 @@ class TableContainer extends Component {
   unpackRecords = result => {
     let records = this.processRecords(result);
 
-    records.data = records.map(
-      record => this.addActions(record.data)
-    );
-
     this.setColumnLabels(records);
+
+    records = records.map(record => {
+      const data = record.data;
+
+      this.columnLabels.forEach(label => {
+        if (data[label] === undefined) data[label] = null;
+      });
+
+      return record;
+    });
+    this.addActionLabels();
 
     this.setState({
       records: records,
@@ -38,9 +55,7 @@ class TableContainer extends Component {
     if (!data) return false;
 
     return !Object.keys(data).find(
-      key => {
-        return key === '0';
-      }
+      key => key === '0'
     );
   };
 
@@ -53,32 +68,38 @@ class TableContainer extends Component {
   };
 
   processRecords = records => {
-    return records.reduce((filtered, record) => {
-      if (!this.validateData(record.data)) return filtered;
+    return records.reduce((processed, record) => {
 
-      filtered.push(
+      if (!this.validateData(record.data)) return processed;
+
+      processed.push(
         this.filterRecord(
           Object.entries(record)
         )
       );
 
-      return filtered;
+      return processed;
     }, []);
   };
 
   setColumnLabels = records => {
-    const data = records[0].data;
+    const labels = new Set();
 
-    this.columnLabels = Object.keys(data);
+    records.forEach(record => {
+      const keys = Object.keys(record.data);
+
+      for (let key of keys) {
+        labels.add(key);
+      }
+    });
+
+    this.columnLabels = Array(...labels);
   };
 
-  addActions = data => {
-    const actions = [
-      {'': <span className={'table__delete icon'}>&#xe9ad;</span>}
-    ];
-    this.actionsAmount = actions.length;
-
-    return Object.assign(data, ...actions);
+  addActionLabels = () => {
+    this.columnLabels = this.columnLabels.concat(
+      Array(this.actionsAmount).fill(null)
+    );
   };
 
 
@@ -88,7 +109,8 @@ class TableContainer extends Component {
       .then(response => {
         if (response.ok) this.loadRecords();
         else throw new Error(`Table add record failed: ${response.status} (${response.statusText})`);
-      }).catch(error => {throw error});
+      })
+      .catch(error => {throw error});
   };
 
   deleteRecord = id => {
@@ -103,7 +125,8 @@ class TableContainer extends Component {
             records: records,
           });
         } else throw new Error(`Table delete record failed: ${response.status} (${response.statusText})`);
-      }).catch(error => {throw error});
+      })
+      .catch(error => {throw error});
   };
 
   handleDelete = ({ target }) => {
@@ -132,8 +155,7 @@ class TableContainer extends Component {
   };
 
   render() {
-    if (!this.state) return null;
-
+    if (!this.state.records.length) return null;
     const { records } = this.state;
 
     return (

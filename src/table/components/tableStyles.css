@@ -1,0 +1,167 @@
+.btn,
+.btn--accent {
+  padding: 10px;
+  border: none;
+  background-color: #3a3e48;
+
+  color: inherit;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.btn:hover {
+  box-shadow: 3px 3px 0 -1px #458FFF;
+}
+
+.btn--accent {
+  background-color: #458FFF;
+  color: #3a3e48;
+}
+
+.btn--accent:hover {
+  box-shadow: 3px 3px 0 -1px #c1c1c1;
+}
+
+.icon {
+  font-family: "Icomoon";
+  cursor: pointer;
+}
+
+.table__edit {
+  color: #fee12b;
+}
+
+.table__edit:hover {
+  color: #dbbe2b;
+}
+
+.table__delete {
+  color: #ca3433;
+}
+
+.table__delete:hover {
+  color: #b12626;
+}
+
+.table__submit {
+  color: #64ff38;
+}
+
+.table__submit:hover {
+  color: #81d832;
+}
+
+.table__cancel {
+  color: #fe3b39;
+}
+
+.table__cancel:hover {
+  color: #d63634;
+}
+
+
+.table-container {
+  background-color: #454852;
+
+  color: #c1c1c1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table__header {
+  width: 100%;
+  background-color: #3a3e48;
+  color: #B212FF;
+  font-size: 1.11em;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+
+.table__header-cell {
+  padding: 20px 10px;
+}
+
+.table__cell {
+  padding: 15px 25px;
+}
+
+.table__cell:nth-last-child(-n+2) {
+  padding: 15px 10px;
+}
+
+.table__cell:last-child {
+  padding-right: 25px;
+}
+
+.table__cell-input {
+  box-sizing: content-box;
+  margin-bottom: -2px;
+  padding: 5px;
+  border: none;
+  border-bottom: 2px solid rgba(193, 193, 193, 0.5);
+  background-color: transparent;
+
+  font-size: inherit;
+  color: inherit;
+}
+
+.table__row,
+.table__row--edit {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  letter-spacing: 0.025em;
+}
+
+.table__row--edit {
+  background-color: rgba(51, 51, 51, 0.15);
+}
+
+.table__row:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
+
+.add-record {
+  padding: 10px;
+}
+
+.add-record__field {
+  display: block;
+  margin: 0 0 10px;
+  text-align: right;
+}
+
+.add-record__input {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 2px solid rgba(193, 193, 193, 0.5);
+  background-color: rgba(0,0,0,0.1);
+  color: #c1c1c1;
+  font-size: 1em;
+}
+
+.table-container input[type=text]:hover,
+.table-container input[type=text]:focus {
+  border-color: #458FFF;
+  outline: none;
+}
+
+.add-record__open {
+  width: 100%;
+}
+
+.add-record__btns {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.add-record__submit,
+.add-record__close {
+  width: calc(50% - 5px);
+}

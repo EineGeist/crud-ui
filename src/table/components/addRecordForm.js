@@ -4,7 +4,7 @@ class AddRecordForm extends Component {
   renderTextInput = name => {
     return (
       <label
-        className={'add-record__fieldName'}
+        className={'add-record__field'}
         key={name}
       >
         {name}:
@@ -30,7 +30,7 @@ class AddRecordForm extends Component {
         <div className={'add-record__btns'}>
           <input
             type={'submit'}
-            className={'add-record__submit btn'}
+            className={'add-record__submit btn--accent'}
             onClick={this.props.handleSubmit}
             value={'Add'}
           />

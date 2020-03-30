@@ -27,7 +27,7 @@ const requests = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: 'json=' + JSON.stringify(data),
+      body: JSON.stringify(data),
     });
   },
 
