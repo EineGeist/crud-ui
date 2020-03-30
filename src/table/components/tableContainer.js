@@ -39,7 +39,6 @@ class TableContainer extends Component {
       const data = record.data;
 
       columnLabels.forEach(label => {
-        console.log(label)
         if (data[label] === undefined) data[label] = null;
       });
 
@@ -164,10 +163,11 @@ class TableContainer extends Component {
     const { records, columnLabels } = this.state;
 
     return (
-      <div className={'table-container'} onClick={this.handleDelete}>
+      <div className={'table-container'}>
         <Table
           columnLabels={columnLabels}
           records={records}
+          deleteHandler={this.deleteRecord}
         />
 
         <div className={'add-record'}>

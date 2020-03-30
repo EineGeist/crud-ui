@@ -10,7 +10,10 @@ class Table extends Component {
     return (
       <table className={'table'}>
         <TableHead columnLabels={columnLabels} />
-        <TableBody records={records} />
+        <TableBody
+          records={records}
+          deleteHandler={this.props.deleteHandler}
+        />
       </table>
     );
   }

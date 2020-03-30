@@ -14,7 +14,7 @@ class TableRow extends Component {
       editMode: false,
       initialData: data,
       data: data,
-    }
+    };
   };
 
   handleInputChange = (key, value) => {
@@ -27,10 +27,13 @@ class TableRow extends Component {
   };
 
   handleClick = ({ target }) => {
-    if (target.closest('.table__submit')) {
-      this.handleSubmit();
-    } else if (target.closest('.table__edit')) {
+    if (target.closest('.table__edit')) {
       this.setState({editMode: true});
+    } else if (target.closest('.table__delete')) {
+      const { id } = this.props;
+      this.props.deleteHandler(id);
+    } else if (target.closest('.table__submit')) {
+      this.handleSubmit();
     } else if (target.closest('.table__cancel')) {
       this.setState({
         editMode: false,
@@ -79,7 +82,6 @@ class TableRow extends Component {
   };
 
   render() {
-    const { id } = this.props;
     const { data, editMode } = this.state;
     const rowClassName = 'table__row';
 
@@ -90,7 +92,6 @@ class TableRow extends Component {
     return (
       <tr
         onClick={this.handleClick}
-        data-key={id}
         className={rowClassName + (editMode ? ` ${rowClassName}--edit` : '')}
       >
         {Object.entries(data).map(this.renderData)}

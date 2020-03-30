@@ -10,6 +10,7 @@ class TableBody extends Component {
       key={_id}
       id={_id}
       data={data}
+      deleteHandler={this.props.deleteHandler}
     />
   };
 
