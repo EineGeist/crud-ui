@@ -10,7 +10,7 @@ class TableContainer extends Component {
     super(props);
 
     this.state = {
-      records: [],
+      records: null,
     }
   }
 
@@ -83,7 +83,12 @@ class TableContainer extends Component {
   };
 
   setColumnLabels = records => {
+    const { headings } = this.props;
     const labels = new Set();
+
+    if (Array.isArray(headings)) {
+      headings.forEach(heading => labels.add(heading));
+    }
 
     records.forEach(record => {
       const keys = Object.keys(record.data);
@@ -155,7 +160,7 @@ class TableContainer extends Component {
   };
 
   render() {
-    if (!this.state.records.length) return null;
+    if (!this.state.records) return null;
     const { records } = this.state;
 
     return (
