@@ -91,7 +91,7 @@ class TableRow extends Component {
       <tr
         onClick={this.handleClick}
         data-key={id}
-        className={rowClassName + (editMode ? '--edit' : '')}
+        className={rowClassName + (editMode ? ` ${rowClassName}--edit` : '')}
       >
         {Object.entries(data).map(this.renderData)}
         {actionsSet.map(this.renderActions)}

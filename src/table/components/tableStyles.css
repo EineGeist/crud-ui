@@ -10,7 +10,7 @@
 }
 
 .btn:hover {
-  box-shadow: 3px 3px 0 -1px #458FFF;
+  box-shadow: 3px 3px 0 -1px #c1c1c1;
 }
 
 .btn--accent {
@@ -74,7 +74,7 @@
 .table__header {
   width: 100%;
   background-color: #3a3e48;
-  color: #B212FF;
+  color: #e022ff;
   font-size: 1.11em;
   letter-spacing: 0.05em;
   text-transform: capitalize;
@@ -82,6 +82,24 @@
 
 .table__header-cell {
   padding: 20px 10px;
+}
+
+.table__row {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  letter-spacing: 0.025em;
+}
+
+.table__row:last-child {
+  border-bottom-width: 10px;
+  border-bottom-color: #3a3e48;
+}
+
+.table__row--edit {
+  background-color: rgba(51, 51, 51, 0.15);
+}
+
+.table__row:hover {
+  background-color: rgba(255,255,255,0.05);
 }
 
 .table__cell {
@@ -106,20 +124,6 @@
 
   font-size: inherit;
   color: inherit;
-}
-
-.table__row,
-.table__row--edit {
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-  letter-spacing: 0.025em;
-}
-
-.table__row--edit {
-  background-color: rgba(51, 51, 51, 0.15);
-}
-
-.table__row:hover {
-  background-color: rgba(255,255,255,0.05);
 }
 
 
