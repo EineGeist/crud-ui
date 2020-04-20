@@ -11,10 +11,9 @@ class TableContainer extends Component {
 
     this.state = {
       records: null,
+      actionsAmount: 2,
     }
   }
-
-  actionsAmount = 2;
 
   componentDidMount = () => {
     this.loadRecords();
@@ -26,7 +25,8 @@ class TableContainer extends Component {
       .then(response => {
         if (response.ok) return response.json();
         else throw new Error(`Table loading failed: ${response.status} (${response.statusText})`);
-      }).then(this.unpackRecords)
+      })
+      .then(this.unpackRecords)
       .catch(error => {throw error});
   };
 
@@ -53,7 +53,9 @@ class TableContainer extends Component {
   };
 
   validateData = data => {
-    if (!data) return false;
+    if (!data // checks if data is null
+      || typeof data !== 'object'
+      || Array.isArray(data)) return false;
 
     return !Object.keys(data).find(
       key => key === '0'
@@ -70,8 +72,8 @@ class TableContainer extends Component {
 
   processRecords = records => {
     return records.reduce((processed, record) => {
-
-      if (!this.validateData(record.data)) return processed;
+      if (!record._id
+        || !this.validateData(record.data)) return processed;
 
       processed.push(
         this.filterRecord(
@@ -103,7 +105,7 @@ class TableContainer extends Component {
   };
 
   getActionLabels = () => {
-    return Array(this.actionsAmount).fill(null)
+    return Array(this.state.actionsAmount).fill(null)
   };
 
 
@@ -133,19 +135,9 @@ class TableContainer extends Component {
       .catch(error => {throw error});
   };
 
-  handleDelete = ({ target }) => {
-    if (!target.closest('.table__delete')) return;
-
-    const tableRow = target.closest('.table__row');
-    if (!tableRow) return;
-
-    this.deleteRecord(tableRow.dataset.key);
-  };
-
 
   renderAddRecord = () => {
-    const { actionsAmount } = this;
-    const { columnLabels, records } = this.state;
+    const { columnLabels, records, actionsAmount } = this.state;
 
     // weeds actions off
     const filedNames = columnLabels

@@ -19,7 +19,6 @@ class TableCell extends Component {
           editMode
             ? <input
                 className={'table__cell-input'}
-                style={{width: `${value.length || 5}ch`}}
                 onChange={this.handleInputChange}
                 type={'text'}
                 value={value}

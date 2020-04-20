@@ -1,8 +1,8 @@
-.btn,
-.btn--accent {
+.btn {
   padding: 10px;
   border: none;
   background-color: #3a3e48;
+  outline: none;
 
   color: inherit;
   font-size: 1em;
@@ -20,6 +20,12 @@
 
 .btn--accent:hover {
   box-shadow: 3px 3px 0 -1px #c1c1c1;
+}
+
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+  outline: none;
 }
 
 .icon {

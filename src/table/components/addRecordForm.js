@@ -30,7 +30,7 @@ class AddRecordForm extends Component {
         <div className={'add-record__btns'}>
           <input
             type={'submit'}
-            className={'add-record__submit btn--accent'}
+            className={'add-record__submit btn btn--accent'}
             onClick={this.props.handleSubmit}
             value={'Add'}
           />
