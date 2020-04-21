@@ -86,12 +86,7 @@ class TableContainer extends Component {
   };
 
   getColumnLabels = records => {
-    const { headings } = this.props;
     const labels = new Set();
-
-    if (Array.isArray(headings)) {
-      headings.forEach(heading => labels.add(heading));
-    }
 
     records.forEach(record => {
       const keys = Object.keys(record.data);
