@@ -4,20 +4,20 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/EineGeist/crud-ui.git"
+    "client-install": "npm i --prexif client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Ivan Dovzhikov",
   "license": "MIT",
-  "bugs": {
-    "url": "https://gitlab.com/EineGeist/crud-ui/issues"
-  },
-  "homepage": "https://gitlab.com/EineGeist/crud-ui#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
