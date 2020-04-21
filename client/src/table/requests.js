@@ -1,5 +1,5 @@
 const requests = {
-  API_PATH: 'http://178.128.196.163:3000/api/records/',
+  API_PATH: '/api/records/',
 
   GET_RECORDS() {
     return fetch(this.API_PATH, {method: 'GET'});
@@ -11,7 +11,7 @@ const requests = {
 
   ADD_RECORD(data) {
     return fetch(this.API_PATH, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const requests = {
 
   CHANGE_RECORD(id, data) {
     return fetch(`${this.API_PATH}${id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
