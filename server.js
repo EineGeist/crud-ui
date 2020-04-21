@@ -4,20 +4,14 @@ const mongoose = require('mongoose');
 
 
 const { mongoURI: db } = require('./config/keys');
-
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err));
 
 
-const records = require('./routes/api/records');
-
 const server = express();
-
-const bodyParser = require('body-parser');
-server.use(bodyParser.json());
-
-server.use('/api/records', records);
+server.use(express.json());
+server.use('/api/records', require('./routes/api/records'));
 
 
 if (process.env.NODE_ENV === 'production') {
