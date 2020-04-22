@@ -11,14 +11,20 @@
 
 html {
   font-size: 112.5%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+/* user agent stylesheet overrides html style for some reason */
+input[type="text"] {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
 }
 
 body {
   margin: 0;
   padding: 0;
   background-color: #1f2739;
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
 }
 
 html,
