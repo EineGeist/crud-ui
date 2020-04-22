@@ -1,7 +1,22 @@
+:root {
+  --accent: #0086f1;
+  --dark: #3a3e48;
+  --primary: #454852;
+  --light: #f1f1f1;
+  --light-translucent: rgba(193, 193, 193, 0.5);
+  --green: #64ff38;
+  --green-darker: #81d832;
+  --yellow: #fee12b;
+  --yellow-darker: #dbbe2b;
+  --red: #fe3b39;
+  --red-darker: #d63432;
+}
+
+
 .btn {
   padding: 10px;
   border: none;
-  background-color: #3a3e48;
+  background-color: var(--dark);
   outline: none;
 
   color: inherit;
@@ -10,16 +25,16 @@
 }
 
 .btn:hover {
-  box-shadow: 3px 3px 0 -1px #c1c1c1;
+  box-shadow: 3px 3px 0 -1px var(--light);
 }
 
 .btn--accent {
-  background-color: #458FFF;
-  color: #3a3e48;
+  background-color: var(--accent);
+  color: var(--light);
 }
 
 .btn--accent:hover {
-  box-shadow: 3px 3px 0 -1px #c1c1c1;
+  box-shadow: 3px 3px 0 -1px var(--light);
 }
 
 .btn:active {
@@ -34,42 +49,34 @@
 }
 
 .table__edit {
-  color: #fee12b;
+  color: var(--yellow-darker);
 }
 
 .table__edit:hover {
-  color: #dbbe2b;
+  color: var(--yellow);
 }
-
+.table__cancel,
 .table__delete {
-  color: #ca3433;
+  color: var(--red-darker);
 }
 
+.table__cancel:hover,
 .table__delete:hover {
-  color: #b12626;
+  color: var(--red);
 }
 
 .table__submit {
-  color: #64ff38;
+  color: var(--green-darker);
 }
 
 .table__submit:hover {
-  color: #81d832;
-}
-
-.table__cancel {
-  color: #fe3b39;
-}
-
-.table__cancel:hover {
-  color: #d63634;
+  color: var(--green);
 }
 
 
 .table-container {
-  background-color: #454852;
-
-  color: #c1c1c1;
+  background-color: var(--primary);
+  color: var(--light);
 }
 
 .table {
@@ -79,8 +86,8 @@
 
 .table__header {
   width: 100%;
-  background-color: #3a3e48;
-  color: #e022ff;
+  background-color: var(--dark);
+  color: var(--accent);
   font-size: 1.11em;
   letter-spacing: 0.05em;
   text-transform: capitalize;
@@ -125,7 +132,7 @@
   margin-bottom: -2px;
   padding: 5px;
   border: none;
-  border-bottom: 2px solid rgba(193, 193, 193, 0.5);
+  border-bottom: 2px solid var(--light-translucent);
   background-color: transparent;
 
   font-size: inherit;
@@ -141,21 +148,22 @@
   display: block;
   margin: 0 0 10px;
   text-align: right;
+  text-transform: capitalize;
 }
 
 .add-record__input {
   margin-left: 5px;
   padding: 5px 10px;
   border: none;
-  border-bottom: 2px solid rgba(193, 193, 193, 0.5);
-  background-color: rgba(0,0,0,0.1);
-  color: #c1c1c1;
+  border-bottom: 2px solid var(--light-translucent);
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--light);
   font-size: 1em;
 }
 
 .table-container input[type=text]:hover,
 .table-container input[type=text]:focus {
-  border-color: #458FFF;
+  border-color: var(--accent);
   outline: none;
 }
 
