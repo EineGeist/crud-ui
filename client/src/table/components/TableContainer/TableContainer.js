@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Table from './table.js';
-import AddRecord from "./addRecord.js";
+import Table from '../Table/Table.js';
+import AddRecord from "../AddRecord/AddRecord.js";
+import '../tableStyles.css';
 
-import requests from "../requests.js";
+import requests from "../../requests.js";
 
 
 class TableContainer extends Component {

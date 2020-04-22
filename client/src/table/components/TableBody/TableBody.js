@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TableRow from './tableRow.js';
+import TableRow from '../TableRow/TableRow.js';
 
 class TableBody extends Component {
   renderRow = (row, i) => {

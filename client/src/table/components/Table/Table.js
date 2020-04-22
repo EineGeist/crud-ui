@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import TableBody from './tableBody.js';
-import TableHead from './tableHead.js';
-import './tableStyles.css';
+import TableBody from '../TableBody/TableBody.js';
+import TableHead from '../TableHead/TableHead.js';
 
 class Table extends Component {
   render() {

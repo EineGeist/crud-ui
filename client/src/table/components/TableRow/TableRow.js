@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import TableCell from './tableCell.js';
-import TableCellAction from './tableCellAction.js';
+import TableCell from '../TableCell/TableCell.js';
+import TableCellAction from '../TableCellAction/TableCellAction.js';
 
-import requests from "../requests.js";
-import actions from "../actions.js";
+import requests from "../../requests.js";
+import actions from "../../actions.js";
 
 class TableRow extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddRecordForm from "./addRecordForm.js";
+import AddRecordForm from "../AddRecordForm/AddRecordForm.js";
 
 class AddRecord extends Component {
   constructor(props) {
