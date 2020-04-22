@@ -17,9 +17,10 @@ class TableRow extends Component {
     };
   };
 
-  handleInputChange = (key, value) => {
+  onInputChange = ({ target }) => {
+    const {name, value} = target
     const { data } = this.state;
-    const changedData = Object.assign({}, data, {[key]: value});
+    const changedData = Object.assign({}, data, {[name]: value});
 
     this.setState({
       data: changedData,
@@ -62,15 +63,14 @@ class TableRow extends Component {
 
   renderData = entry => {
     const { editMode } = this.state;
-    const key = entry[0];
-    const value = entry[1];
+    const [ field, value ] = entry;    
 
     return <TableCell
-      key={key}
-      keyProp={key}
+      key={field}
+      field={field}
       value={value}
-      inputChangeHandler={this.handleInputChange}
       editMode={editMode}
+      onChange={this.onInputChange}
     />
   };
 
@@ -83,16 +83,20 @@ class TableRow extends Component {
 
   render() {
     const { data, editMode } = this.state;
-    const rowClassName = 'table__row';
 
-    const actionsSet = editMode
-      ? [actions.submit, actions.cancel]
-      : [actions.edit, actions.delete];
+    let actionsSet;
+    let className = 'table__row';
+    if (editMode) {
+      actionsSet = [actions.submit, actions.cancel];
+      className += '--edit';
+    } else {
+      actionsSet = [actions.edit, actions.delete];
+    }
 
     return (
       <tr
         onClick={this.handleClick}
-        className={rowClassName + (editMode ? ` ${rowClassName}--edit` : '')}
+        className={className}
       >
         {Object.entries(data).map(this.renderData)}
         {actionsSet.map(this.renderActions)}

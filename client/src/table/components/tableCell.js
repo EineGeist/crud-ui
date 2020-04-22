@@ -1,33 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TableCell extends Component {
-  handleInputChange = ({ target: { value } }) => {
-    const { keyProp } = this.props;
-    this.props.inputChangeHandler(keyProp, value);
-  };
+function TableCell({ editMode, field, value, onChange }) {
+  const cellContent = editMode 
+    ? <CellInput
+        field={field}
+        value={value}
+        onChange={onChange} 
+      />
+    : value;
 
-  render() {
-    const { editMode } = this.props;
-    let { value } = this.props;
-    if (editMode && !value) value = '';
+  return (
+    <td 
+      key={field}
+      className="table__cell"
+    >
+      {cellContent}
+    </td>
+  )
+}
 
-    return (
-      <td
-        className={'table__cell' + (editMode ? '' : '')}
-      >
-        {
-          editMode
-            ? <input
-                className={'table__cell-input'}
-                onChange={this.handleInputChange}
-                type={'text'}
-                value={value}
-              />
-            : value
-        }
-      </td>
-    );
-  }
+function CellInput({field, value, onChange}) {  
+  return (
+    <div>
+      <input 
+        className={'table__cell-input'}
+        type="text"
+        name={field}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
 }
 
 export default TableCell;
