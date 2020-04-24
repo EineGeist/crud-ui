@@ -19,7 +19,7 @@ class TableRow extends Component {
   onInputChange = ({ target: { name, value } }) => {
     const { data } = this.state;
     const changedData = Object.assign({}, data, { [name]: value });
-
+    
     this.setState({
       data: changedData,
     });
@@ -49,17 +49,11 @@ class TableRow extends Component {
 
     if (data !== initialData) {
       await changeRecord(id, { data });
-      this.exitEditMode();
+      this.setState({
+        editMode: false,
+        initialData: data
+      });
     } else this.setState({ editMode: false });
-  };
-
-  exitEditMode = () => {
-    const { initialData } = this.state;
-
-    this.setState({
-      editMode: false,
-      data: initialData,
-    });
   };
 
   renderData = ([field, value]) => {
