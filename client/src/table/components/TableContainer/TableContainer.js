@@ -3,7 +3,7 @@ import Table from '../Table/Table.js';
 import AddRecord from "../AddRecord/AddRecord.js";
 import '../tableStyles.css';
 
-import requests from "../../requests.js";
+import { getRecords, addRecord, deleteRecord } from "../../requests.js";
 
 
 class TableContainer extends Component {
@@ -21,14 +21,13 @@ class TableContainer extends Component {
   };
 
   loadRecords = () => {
-    requests
-      .GET_RECORDS()
-      .then(response => {
-        if (response.ok) return response.json();
-        else throw new Error(`Table loading failed: ${response.status} (${response.statusText})`);
-      })
-      .then(this.unpackRecords)
-      .catch(error => {throw error});
+    getRecords()
+    .then(response => {
+      if (response.ok) return response.json();
+      else throw new Error(`Table loading failed: ${response.status} (${response.statusText})`);
+    })
+    .then(this.unpackRecords)
+    .catch(error => {throw error});
   };
 
   unpackRecords = result => {
@@ -106,8 +105,7 @@ class TableContainer extends Component {
 
 
   addRecord = data => {
-    requests
-      .ADD_RECORD({data: data})
+    addRecord({data: data})
       .then(response => {
         if (response.ok) this.loadRecords();
         else throw new Error(`Table add record failed: ${response.status} (${response.statusText})`);
@@ -116,8 +114,7 @@ class TableContainer extends Component {
   };
 
   deleteRecord = id => {
-    requests
-      .DELETE_RECORD(id)
+    deleteRecord(id)
       .then(response => {
         if (response.ok) {
           const records = this.state.records.slice()

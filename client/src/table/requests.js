@@ -1,39 +1,37 @@
-const requests = {
-  API_PATH: '/api/records/',
+const API_PATH = '/api/records/';
 
-  GET_RECORDS() {
-    return fetch(this.API_PATH, {method: 'GET'});
-  },
-
-  GET_RECORD_BY_ID(id) {
-    return fetch(`${this.API_PATH}${id}`, {method: 'GET'});
-  },
-
-  ADD_RECORD(data) {
-    return fetch(this.API_PATH, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  },
-
-  CHANGE_RECORD(id, data) {
-    return fetch(`${this.API_PATH}${id}`, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  },
-
-  DELETE_RECORD(id) {
-    return fetch(`${this.API_PATH}${id}`, {method: 'DELETE'});
-  },
+export const getRecords = () => {
+  return fetch(API_PATH, { method: 'GET' });
 };
 
-export default requests;
+export const getRecordsById = id => {
+  return fetch(`${API_PATH}${id}`, { method: 'GET' });
+};
+
+export const addRecord = data => {
+  return fetch(API_PATH, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+export const changeRecord = (id, data) => {
+  const response = fetch(`${API_PATH}${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response;
+};
+
+export const deleteRecord = id => {
+  return fetch(`${API_PATH}${id}`, { method: 'DELETE' });
+};

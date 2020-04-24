@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import TableCell from '../TableCell/TableCell.js';
 
-import requests from "../../requests.js";
-import actions from "../../actions.js";
+import { changeRecord } from '../../requests.js';
+import actions from '../../actions.js';
 
 class TableRow extends Component {
   constructor(props) {
@@ -12,14 +12,13 @@ class TableRow extends Component {
     this.state = {
       editMode: false,
       initialData: data,
-      data: data,
+      data,
     };
-  };
+  }
 
-  onInputChange = ({ target }) => {
-    const {name, value} = target
+  onInputChange = ({ target: { name, value } }) => {
     const { data } = this.state;
-    const changedData = Object.assign({}, data, {[name]: value});
+    const changedData = Object.assign({}, data, { [name]: value });
 
     this.setState({
       data: changedData,
@@ -28,7 +27,7 @@ class TableRow extends Component {
 
   handleClick = ({ target }) => {
     if (target.closest('.table__edit')) {
-      this.setState({editMode: true});
+      this.setState({ editMode: true });
     } else if (target.closest('.table__delete')) {
       const { id } = this.props;
       this.props.deleteHandler(id);
@@ -42,43 +41,49 @@ class TableRow extends Component {
     }
   };
 
-  handleSubmit = () => {
-    const { data, initialData } = this.state;
-    const { id } = this.props;
+  handleSubmit = async () => {
+    const {
+      state: { data, initialData },
+      props: { id },
+    } = this;
 
     if (data !== initialData) {
-      requests.CHANGE_RECORD(id, {data: data})
-        .then(response => {
-          if (response.ok) {
-            this.setState({
-              editMode: false,
-              initialData: data,
-            });
-          } else throw new Error(`Table change record failed: ${response.status} (${response.statusText})`);
-        })
-        .catch(error => {throw error});
-    } else this.setState({editMode: false});
+      await changeRecord(id, { data });
+      this.exitEditMode();
+    } else this.setState({ editMode: false });
   };
 
-  renderData = entry => {
-    const { editMode } = this.state;
-    const [ field, value ] = entry;    
+  exitEditMode = () => {
+    const { initialData } = this.state;
 
-    return <TableCell
-      key={field}
-      field={field}
-      value={value}
-      editMode={editMode}
-      onChange={this.onInputChange}
-    />
+    this.setState({
+      editMode: false,
+      data: initialData,
+    });
+  };
+
+  renderData = ([field, value]) => {
+    const { editMode } = this.state;
+
+    return (
+      <TableCell
+        key={field}
+        field={field}
+        value={value}
+        editMode={editMode}
+        onChange={this.onInputChange}
+      />
+    );
   };
 
   renderActions = (action, i) => {
-    return <TableCell
-      key={i}
-      editMode={false}
-      value={action}
-    />
+    return (
+      <TableCell
+        key={i}
+        editMode={false}
+        value={action}
+      />
+    );
   };
 
   render() {
@@ -94,15 +99,12 @@ class TableRow extends Component {
     }
 
     return (
-      <tr
-        onClick={this.handleClick}
-        className={className}
-      >
+      <tr onClick={this.handleClick} className={className}>
         {Object.entries(data).map(this.renderData)}
         {actionsSet.map(this.renderActions)}
       </tr>
     );
-  };
+  }
 }
 
 export default TableRow;
