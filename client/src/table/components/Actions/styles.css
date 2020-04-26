@@ -19,6 +19,11 @@
   color: var(--green-darker);
 }
 
-.table__submit:hover {
+.table__submit[disabled] {
+  color: var(--light-translucent);
+  cursor: initial;
+}
+
+.table__submit:not([disabled]):hover {
   color: var(--green);
 }

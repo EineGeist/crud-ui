@@ -2,25 +2,30 @@ import React from 'react';
 import './styles.css';
 
 export const EditButton = ({ onClick }) => (
-  <span className={'table__edit icon'} onClick={onClick}>
+  <button className={'table__edit icon'} onClick={onClick}>
     &#xe905;
-  </span>
+  </button>
 );
 
 export const DeleteButton = ({ onClick }) => (
-  <span className={'table__delete icon'} onClick={onClick}>
+  <button className={'table__delete icon'} onClick={onClick}>
     &#xe9ad;
-  </span>
+  </button>
 );
 
-export const SumbitButton = ({ onClick }) => (
-  <span className={'table__submit icon'} onClick={onClick}>
+export const SumbitButton = ({ onClick, disabled }) => (
+  <button 
+    className={'table__submit icon'}
+    type="submit"
+    onClick={onClick}
+    disabled={disabled}
+  >
     &#xea10;
-  </span>
+  </button>
 );
 
 export const CancelButton = ({ onClick }) => (
-  <span className={'table__cancel icon'} onClick={onClick}>
+  <button className={'table__cancel icon'} onClick={onClick}>
     &#xea0f;
-  </span>
+  </button>
 );

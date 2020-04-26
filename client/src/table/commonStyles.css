@@ -1,7 +1,7 @@
 :root {
+  --primary: #454852;
   --accent: #0086f1;
   --dark: #3a3e48;
-  --primary: #454852;
   --light: #f1f1f1;
   --light-translucent: rgba(193, 193, 193, 0.5);
   --green: #64ff38;
@@ -22,6 +22,17 @@
   color: inherit;
   font-size: 1em;
   font-weight: normal;
+  cursor: pointer;
+}
+
+.btn[disabled] {
+  background-color: var(--light-translucent);
+  color: var(--dark);
+  cursor: initial;
+}
+
+.btn[disabled]:hover {
+  box-shadow: initial;
 }
 
 .btn:hover {
@@ -40,10 +51,13 @@
 .btn:active {
   transform: translate(3px, 3px);
   box-shadow: none;
-  outline: none;
+  /* outline: none; */
 }
 
 .icon {
+  background-color: transparent;
+  border: none;
   font-family: "Icomoon";
+  font-size: 1rem;
   cursor: pointer;
 }

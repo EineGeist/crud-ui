@@ -17,6 +17,11 @@ class TableRow extends Component {
     data: this.props.data,
   };
 
+  validateInputData = () => {    
+    const values = Object.values(this.state.data);    
+    return !values.includes('');
+  };
+
   onChange = ({ target: { name, value } }) => {
     const { data } = this.state;
     const changedData = Object.assign({}, data, { [name]: value });
@@ -90,7 +95,7 @@ class TableRow extends Component {
     let className = 'table__row';
     if (editMode) {
       actionsSet = [
-        <SumbitButton onClick={onSubmit} />,
+        <SumbitButton onClick={onSubmit} disabled={!this.validateInputData()} />,
         <CancelButton onClick={onCancel} />,
       ];
       className += '--edit';

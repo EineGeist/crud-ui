@@ -18,7 +18,12 @@ class AddRecord extends Component {
 
   resetInputData = () => {
     this.setState({ inputData: this.setInputData() });
-  }
+  };
+
+  validateInputData = () => {    
+    const values = Object.values(this.state.inputData);    
+    return !values.includes('');
+  };
 
   onChange = ({ target: { name, value } }) => {
     const changedData = Object.assign({}, this.state.inputData, {[name]: value});
@@ -37,33 +42,28 @@ class AddRecord extends Component {
   onClose = () => {
     this.toggleShowForm();
     this.resetInputData();
-  }
+  };
 
   renderAddButton = () => {
     return (
-      <button className={'add-record__show btn'} onClick={this.toggleShowForm}>
+      <button
+        className={'add-record__show btn'}
+        onClick={this.toggleShowForm}
+      >
         Add a new record
       </button>
     );
   };
 
-  renderForm = () => {
-    const { 
-      props: { fieldNames },
-      onChange,
-      onSubmit,
-      onClose,
-    } = this;
-
-    return (
-      <AddRecordForm
-        fieldNames={fieldNames}
-        onChange={onChange}
-        onSubmit={onSubmit}
-        onClose={onClose}
-      />
-    );
-  };
+  renderForm = () => (
+    <AddRecordForm
+      fieldNames={this.props.fieldNames}
+      onChange={this.onChange}
+      onSubmit={this.onSubmit}
+      onClose={this.onClose}
+      submitDisabled={!this.validateInputData()}
+    />
+  );
 
   render() {
     return (
@@ -73,7 +73,7 @@ class AddRecord extends Component {
         : this.renderAddButton()}
       </div>
     )
-  }
+  };
 }
 
 export default AddRecord;
