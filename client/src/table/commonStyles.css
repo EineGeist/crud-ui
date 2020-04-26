@@ -1,0 +1,49 @@
+:root {
+  --accent: #0086f1;
+  --dark: #3a3e48;
+  --primary: #454852;
+  --light: #f1f1f1;
+  --light-translucent: rgba(193, 193, 193, 0.5);
+  --green: #64ff38;
+  --green-darker: #81d832;
+  --yellow: #fee12b;
+  --yellow-darker: #dbbe2b;
+  --red: #fe3b39;
+  --red-darker: #d63432;
+}
+
+
+.btn {
+  padding: 10px;
+  border: none;
+  background-color: var(--dark);
+  outline: none;
+
+  color: inherit;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.btn:hover {
+  box-shadow: 3px 3px 0 -1px var(--light);
+}
+
+.btn--accent {
+  background-color: var(--accent);
+  color: var(--light);
+}
+
+.btn--accent:hover {
+  box-shadow: 3px 3px 0 -1px var(--light);
+}
+
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+  outline: none;
+}
+
+.icon {
+  font-family: "Icomoon";
+  cursor: pointer;
+}

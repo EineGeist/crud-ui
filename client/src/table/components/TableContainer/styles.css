@@ -1,0 +1,10 @@
+.table-container {
+  background-color: var(--primary);
+  color: var(--light);
+}
+
+.table-container input[type=text]:hover,
+.table-container input[type=text]:focus {
+  border-color: var(--accent);
+  outline: none;
+}

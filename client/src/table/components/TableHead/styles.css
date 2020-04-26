@@ -1,0 +1,12 @@
+.table__header {
+  width: 100%;
+  background-color: var(--dark);
+  color: var(--accent);
+  font-size: 1.11em;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+
+.table__header-cell {
+  padding: 20px 10px;
+}

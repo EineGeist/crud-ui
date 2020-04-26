@@ -1,15 +1,43 @@
 const API_PATH = '/api/records/';
 
-export const getRecords = () => {
-  return fetch(API_PATH, { method: 'GET' });
+const processRecords = records => {
+  const validateData = data => {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
+
+    return !Object.keys(data).find(key => key === '0');
+  };
+
+  const removeServiceInformation = record => {
+    for (let key in record) {
+      if (record.hasOwnProperty(key))
+        if (key.slice(0, 2) === '__') delete record[key];
+    }
+
+    return record;
+  };
+
+  return records.reduce((processed, record) => {
+    if (!record._id || !validateData(record.data)) return processed;
+    processed.push(removeServiceInformation(record));
+    return processed;
+  }, []);
 };
 
-export const getRecordsById = id => {
-  return fetch(`${API_PATH}${id}`, { method: 'GET' });
+const processRecord = record => processRecords([record])[0]; 
+
+export const getRecords = async (id = '') => {
+  const response = await fetch(`${API_PATH}${id}`, {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  });
+
+  if (!response.ok) return false;
+  const result = await response.json();  
+  return id ? processRecord(result) : processRecords(result);
 };
 
-export const addRecord = data => {
-  return fetch(API_PATH, {
+export const addRecord = async data => {
+  const response = await fetch(API_PATH, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -17,10 +45,14 @@ export const addRecord = data => {
     },
     body: JSON.stringify(data),
   });
+  
+  if (!response.ok) return false;
+  const result = await response.json();  
+  return processRecord(result);
 };
 
-export const changeRecord = (id, data) => {
-  const response = fetch(`${API_PATH}${id}`, {
+export const changeRecord = async (id, data) => {
+  const res = await fetch(`${API_PATH}${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -29,9 +61,15 @@ export const changeRecord = (id, data) => {
     body: JSON.stringify(data),
   });
 
-  return response;
+  return res.ok;
 };
 
-export const deleteRecord = id => {
-  return fetch(`${API_PATH}${id}`, { method: 'DELETE' });
+export const deleteRecord = async id => {
+  const res = await fetch(`${API_PATH}${id}`, {
+    method: 'DELETE',
+    headers: { Accept: 'application/json' },
+  });
+
+  return res.ok;
 };
+

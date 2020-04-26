@@ -1,0 +1,23 @@
+.table__cell {
+  padding: 15px 25px;
+}
+
+.table__cell:nth-last-child(-n+2) {
+  padding: 15px 10px;
+}
+
+.table__cell:last-child {
+  padding-right: 25px;
+}
+
+.table__cell-input {
+  box-sizing: content-box;
+  margin-bottom: -2px;
+  padding: 5px;
+  border: none;
+  border-bottom: 2px solid var(--light-translucent);
+  background-color: transparent;
+
+  font-size: inherit;
+  color: inherit;
+}

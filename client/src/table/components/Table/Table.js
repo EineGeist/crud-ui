@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TableBody from '../TableBody/TableBody.js';
 import TableHead from '../TableHead/TableHead.js';
+import './styles.css';
 
-class Table extends Component {
-  render() {
-    const { columnLabels, records } = this.props;
-
-    return (
-      <table className={'table'}>
-        <TableHead columnLabels={columnLabels} />
-        <TableBody
-          records={records}
-          deleteHandler={this.props.deleteHandler}
-        />
-      </table>
-    );
-  }
-}
+const Table = ({ columnLabels, records, deleteHandler }) => (
+  <table className={'table'}>
+    <TableHead columnLabels={columnLabels} />
+    <TableBody
+      records={records}
+      deleteHandler={deleteHandler}
+    />
+  </table>
+);
 
 export default Table;

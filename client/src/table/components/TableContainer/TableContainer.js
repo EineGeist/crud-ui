@@ -1,165 +1,103 @@
 import React, { Component } from 'react';
 import Table from '../Table/Table.js';
-import AddRecord from "../AddRecord/AddRecord.js";
-import '../tableStyles.css';
+import AddRecord from '../AddRecord/AddRecord.js';
+import './styles.css';
 
-import { getRecords, addRecord, deleteRecord } from "../../requests.js";
-
+import {
+  getRecords,
+  addRecord,
+  deleteRecord,
+} from '../../requests.js';
 
 class TableContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      records: null,
-      actionsAmount: 2,
-    }
-  }
-
-  componentDidMount = () => {
-    this.loadRecords();
+  state = {
+    records: null,
   };
 
-  loadRecords = () => {
-    getRecords()
-    .then(response => {
-      if (response.ok) return response.json();
-      else throw new Error(`Table loading failed: ${response.status} (${response.statusText})`);
-    })
-    .then(this.unpackRecords)
-    .catch(error => {throw error});
-  };
+  ACTIONS_AMOUNT = 2;
 
-  unpackRecords = result => {
-    let records = this.processRecords(result);
-
+  componentDidMount = async () => {
+    const records = await getRecords();
     const columnLabels = this.getColumnLabels(records);
-
-    records = records.map(record => {
-      const data = record.data;
-
-      columnLabels.forEach(label => {
-        if (data[label] === undefined) data[label] = null;
-      });
-
-      return record;
-    });
-
-    this.setState({
-      records: records,
-      columnLabels: columnLabels
-        .concat(this.getActionLabels()),
-    });
-  };
-
-  validateData = data => {
-    if (!data // checks if data is null
-      || typeof data !== 'object'
-      || Array.isArray(data)) return false;
-
-    return !Object.keys(data).find(
-      key => key === '0'
-    );
-  };
-
-  filterRecord = record => {
-    return Object.fromEntries(
-      record.filter(
-        prop => !(prop[0].slice(0, 2) === '__')
-      )
-    );
-  };
-
-  processRecords = records => {
-    return records.reduce((processed, record) => {
-      if (!record._id
-        || !this.validateData(record.data)) return processed;
-
-      processed.push(
-        this.filterRecord(
-          Object.entries(record)
-        )
-      );
-
-      return processed;
-    }, []);
+    this.setState({ records, columnLabels });
   };
 
   getColumnLabels = records => {
     const labels = new Set();
 
-    records.forEach(record => {
-      const keys = Object.keys(record.data);
+    records.forEach(({ data }) => {
+      const keys = Object.keys(data);
 
       for (let key of keys) {
         labels.add(key);
       }
     });
 
-    return Array(...labels);
+    return [...labels, ...Array(this.ACTIONS_AMOUNT).fill(null)];
   };
 
-  getActionLabels = () => {
-    return Array(this.state.actionsAmount).fill(null)
+  addRecord = async data => {
+    const newRecord = await addRecord({ data });
+    
+    if (newRecord)
+      this.setState({
+        records: [].concat(this.state.records, newRecord)
+      });
   };
 
+  deleteRecord = async id => {
+    const isSuccess = await deleteRecord(id);
+    if (isSuccess) {
+      const records = this.state.records
+        .slice()
+        .filter(record => String(record._id) !== id);
 
-  addRecord = data => {
-    addRecord({data: data})
-      .then(response => {
-        if (response.ok) this.loadRecords();
-        else throw new Error(`Table add record failed: ${response.status} (${response.statusText})`);
-      })
-      .catch(error => {throw error});
+      this.setState({
+        records: records,
+      });
+    }
   };
-
-  deleteRecord = id => {
-    deleteRecord(id)
-      .then(response => {
-        if (response.ok) {
-          const records = this.state.records.slice()
-            .filter(record => String(record._id) !== id);
-
-          this.setState({
-            records: records,
-          });
-        } else throw new Error(`Table delete record failed: ${response.status} (${response.statusText})`);
-      })
-      .catch(error => {throw error});
-  };
-
 
   renderAddRecord = () => {
-    const { columnLabels, records, actionsAmount } = this.state;
+    const {
+      ACTIONS_AMOUNT,
+      addRecord,
+      state: { columnLabels },
+    } = this;
 
     // weeds actions off
-    const filedNames = columnLabels
-      .slice(0, columnLabels.length - actionsAmount);
+    const filedNames = columnLabels.slice(
+      0,
+      columnLabels.length - ACTIONS_AMOUNT
+    );
 
-    return <AddRecord
-      id={records.length}
-      fieldNames={filedNames}
-      addHandler={this.addRecord}
-    />
+    return (
+      <AddRecord
+        fieldNames={filedNames}
+        onSubmit={addRecord}
+      />
+    );
   };
 
   render() {
     if (!this.state.records) return null;
-    const { records, columnLabels } = this.state;
+    const {
+      deleteRecord,
+      renderAddRecord,
+      state: { records, columnLabels },
+    } = this;
 
     return (
       <div className={'table-container'}>
         <Table
           columnLabels={columnLabels}
           records={records}
-          deleteHandler={this.deleteRecord}
+          deleteHandler={deleteRecord}
         />
 
-        <div className={'add-record'}>
-          {this.renderAddRecord()}
-        </div>
+        {renderAddRecord()}
       </div>
-    )
+    );
   }
 }
 

@@ -1,87 +1,79 @@
 import React, { Component } from 'react';
-import AddRecordForm from "../AddRecordForm/AddRecordForm.js";
+import AddRecordForm from '../AddRecordForm/AddRecordForm.js';
+import './styles.css';
 
 class AddRecord extends Component {
-  constructor(props) {
-    super(props);
+  setInputData = () => Object.fromEntries(
+    this.props.fieldNames.map(fieldName => [fieldName, ''])
+  );
 
-    const { fieldNames } = props;
-
-    const dataMap = createDataMap(fieldNames);
-    this.state = {
-      showForm: false,
-      fieldNames: fieldNames,
-      data: dataMap,
-    };
-  }
+  state = {
+    showForm: false,
+    inputData: this.setInputData(),
+  };
 
   toggleShowForm = () => {
-    this.setState({
-      showForm: !this.state.showForm,
-    });
+    this.setState({ showForm: !this.state.showForm });
   };
 
-  handleInputChange = ({ target: { name, value } }) => {
-    const data =
-      new Map(this.state.data)
-        .set(name, value);
+  resetInputData = () => {
+    this.setState({ inputData: this.setInputData() });
+  }
 
-    this.setState({
-      data: data,
-    })
+  onChange = ({ target: { name, value } }) => {
+    const changedData = Object.assign({}, this.state.inputData, {[name]: value});
+
+    this.setState({ inputData: changedData });
   };
 
-  handleSubmit = e => {
+  onSubmit = e => {
     e.preventDefault();
+
+    this.props.onSubmit(this.state.inputData);
     this.toggleShowForm();
-
-    const { fieldNames, data: inputData } = this.state;
-
-    const data = Object.fromEntries(inputData);
-    this.props.addHandler(data);
-
-    const dataMap = createDataMap(fieldNames);
-    this.setState({
-      data: dataMap,
-    })
+    this.resetInputData();
   };
+
+  onClose = () => {
+    this.toggleShowForm();
+    this.resetInputData();
+  }
 
   renderAddButton = () => {
-    return <button
-      className={'add-record__open btn'}
-      onClick={this.toggleShowForm}
-    >Add a new record</button>
+    return (
+      <button className={'add-record__show btn'} onClick={this.toggleShowForm}>
+        Add a new record
+      </button>
+    );
   };
 
   renderForm = () => {
-    const { fieldNames } = this.state;
+    const { 
+      props: { fieldNames },
+      onChange,
+      onSubmit,
+      onClose,
+    } = this;
 
-    return <AddRecordForm
-      fieldNames={fieldNames}
-      handleInputChange={this.handleInputChange}
-      handleSubmit={this.handleSubmit}
-      closeForm={this.toggleShowForm}
-    />
-  };
-
-  renderAddRecord = () => {
-    const { showForm } = this.state;
-
-    return showForm ? this.renderForm() : this.renderAddButton();
+    return (
+      <AddRecordForm
+        fieldNames={fieldNames}
+        onChange={onChange}
+        onSubmit={onSubmit}
+        onClose={onClose}
+      />
+    );
   };
 
   render() {
-    return this.renderAddRecord();
+    return (
+      <div className={'add-record'}>
+        {this.state.showForm
+        ? this.renderForm() 
+        : this.renderAddButton()}
+      </div>
+    )
   }
-}
-
-function createDataMap(fieldNames) {
-  const data = [];
-  for (let i = 0; i < fieldNames.length; i++) {
-    data.push([fieldNames[i], null]);
-  }
-
-  return new Map(data);
 }
 
 export default AddRecord;

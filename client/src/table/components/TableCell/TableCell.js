@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';
 
 function TableCell({ editMode, field, value, onChange }) {
   const cellContent = editMode 
@@ -21,15 +22,13 @@ function TableCell({ editMode, field, value, onChange }) {
 
 function CellInput({field, value, onChange}) {  
   return (
-    <div>
-      <input 
-        className={'table__cell-input'}
-        type="text"
-        name={field}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
+    <input 
+      className={'table__cell-input'}
+      type="text"
+      name={field}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 

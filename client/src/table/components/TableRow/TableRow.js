@@ -1,63 +1,66 @@
 import React, { Component } from 'react';
 import TableCell from '../TableCell/TableCell.js';
+import './styles.css';
 
 import { changeRecord } from '../../requests.js';
-import actions from '../../actions.js';
+import {
+  EditButton,
+  DeleteButton,
+  SumbitButton,
+  CancelButton,
+} from '../Actions/Actions.js';
 
 class TableRow extends Component {
-  constructor(props) {
-    super(props);
-    const { data } = props;
+  state = {
+    editMode: false,
+    initialData: this.props.data,
+    data: this.props.data,
+  };
 
-    this.state = {
-      editMode: false,
-      initialData: data,
-      data,
-    };
-  }
-
-  onInputChange = ({ target: { name, value } }) => {
+  onChange = ({ target: { name, value } }) => {
     const { data } = this.state;
     const changedData = Object.assign({}, data, { [name]: value });
-    
-    this.setState({
-      data: changedData,
-    });
+
+    this.setState({ data: changedData });
   };
 
-  handleClick = ({ target }) => {
-    if (target.closest('.table__edit')) {
-      this.setState({ editMode: true });
-    } else if (target.closest('.table__delete')) {
-      const { id } = this.props;
-      this.props.deleteHandler(id);
-    } else if (target.closest('.table__submit')) {
-      this.handleSubmit();
-    } else if (target.closest('.table__cancel')) {
-      this.setState({
-        editMode: false,
-        data: this.state.initialData,
-      });
-    }
-  };
+  toggleEdit = () => this.setState({ editMode: !this.state.editMode });
 
-  handleSubmit = async () => {
+  onDelete = () => this.props.deleteHandler(this.props.id);
+
+  onSubmit = async () => {
     const {
       state: { data, initialData },
       props: { id },
     } = this;
 
-    if (data !== initialData) {
-      await changeRecord(id, { data });
-      this.setState({
-        editMode: false,
-        initialData: data
-      });
-    } else this.setState({ editMode: false });
+    if (data !== initialData) {      
+      const isSuccess = await changeRecord(id, { data });
+      
+      this.exitEdit(isSuccess);
+    } else this.toggleEdit();
+  };
+
+  onCancel = () => this.exitEdit(false);
+
+  exitEdit = save => {
+    const { initialData, data } = this.state;
+
+    const newState = {
+      editMode: false,
+    };
+
+    if (save) newState.initialData = data;
+    else newState.data = initialData;
+
+    this.setState(newState);
   };
 
   renderData = ([field, value]) => {
-    const { editMode } = this.state;
+    const {
+      onChange,
+      state: { editMode },
+    } = this;
 
     return (
       <TableCell
@@ -65,35 +68,41 @@ class TableRow extends Component {
         field={field}
         value={value}
         editMode={editMode}
-        onChange={this.onInputChange}
+        onChange={onChange}
       />
     );
   };
 
   renderActions = (action, i) => {
-    return (
-      <TableCell
-        key={i}
-        editMode={false}
-        value={action}
-      />
-    );
+    return <TableCell key={i} editMode={false} value={action} />;
   };
 
   render() {
-    const { data, editMode } = this.state;
+    const {
+      state: { data, editMode },
+      toggleEdit,
+      onCancel,
+      onDelete,
+      onSubmit,
+    } = this;
 
     let actionsSet;
     let className = 'table__row';
     if (editMode) {
-      actionsSet = [actions.submit, actions.cancel];
+      actionsSet = [
+        <SumbitButton onClick={onSubmit} />,
+        <CancelButton onClick={onCancel} />,
+      ];
       className += '--edit';
     } else {
-      actionsSet = [actions.edit, actions.delete];
+      actionsSet = [
+        <EditButton onClick={toggleEdit} />,
+        <DeleteButton onClick={onDelete} />,
+      ];
     }
 
     return (
-      <tr onClick={this.handleClick} className={className}>
+      <tr className={className}>
         {Object.entries(data).map(this.renderData)}
         {actionsSet.map(this.renderActions)}
       </tr>

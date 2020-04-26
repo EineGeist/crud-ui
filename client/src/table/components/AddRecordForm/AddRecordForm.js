@@ -1,49 +1,50 @@
 import React, { Component } from 'react';
+import './styles.css';
 
 class AddRecordForm extends Component {
   renderTextInput = name => {
     return (
-      <label
-        className={'add-record__field'}
-        key={name}
-      >
+      <label className={'add-record__field'} key={name}>
         {name}:
         <input
           type={'text'}
           name={name}
           className={'add-record__input'}
-          onChange={this.props.handleInputChange}
+          onChange={this.props.onChange}
         />
       </label>
-    )
+    );
   };
 
   render() {
-    const { fieldNames } = this.props;
+    const { 
+      props: { fieldNames, onSubmit, onClose },
+      renderTextInput 
+    } = this;
 
     return (
       <form>
-        {fieldNames
-          .map(this.renderTextInput)
-        }
+        {fieldNames.map(renderTextInput)}
 
         <div className={'add-record__btns'}>
           <input
             type={'submit'}
             className={'add-record__submit btn btn--accent'}
-            onClick={this.props.handleSubmit}
+            onClick={onSubmit}
             value={'Add'}
           />
 
           <button
             type={'button'}
             className={'add-record__close btn'}
-            onClick={this.props.closeForm}
-          >Close</button>
+            onClick={onClose}
+          >
+            Close
+          </button>
         </div>
       </form>
-    )
-  };
+    );
+  }
 }
 
 export default AddRecordForm;

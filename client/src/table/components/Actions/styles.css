@@ -1,0 +1,24 @@
+.table__edit {
+  color: var(--yellow-darker);
+}
+
+.table__edit:hover {
+  color: var(--yellow);
+}
+.table__cancel,
+.table__delete {
+  color: var(--red-darker);
+}
+
+.table__cancel:hover,
+.table__delete:hover {
+  color: var(--red);
+}
+
+.table__submit {
+  color: var(--green-darker);
+}
+
+.table__submit:hover {
+  color: var(--green);
+}

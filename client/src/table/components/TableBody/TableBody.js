@@ -1,28 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TableRow from '../TableRow/TableRow.js';
 
-class TableBody extends Component {
-  renderRow = (row, i) => {
-    const record = this.props.records[i];
-    const { _id, data } = record;
-
+const TableBody = ({ records, deleteHandler }) => {
+  const renderRow = ({ _id, data }) => {
     return <TableRow
       key={_id}
       id={_id}
       data={data}
-      deleteHandler={this.props.deleteHandler}
+      deleteHandler={deleteHandler}
     />
   };
 
-  render() {
-    const { records } = this.props;
-
-    return (
-      <tbody className={'table__body'}>
-        {records.map(this.renderRow)}
-      </tbody>
-    );
-  }
+  return (
+    <tbody className={'table__body'}>
+      {records.map(renderRow)}
+    </tbody>
+  );
 }
 
 export default TableBody;

@@ -1,0 +1,29 @@
+.add-record__field {
+  display: block;
+  margin: 0 0 10px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.add-record__input {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 2px solid var(--light-translucent);
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--light);
+  font-size: 1em;
+}
+
+.add-record__btns {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.add-record__submit,
+.add-record__close {
+  width: calc(50% - 5px);
+}
