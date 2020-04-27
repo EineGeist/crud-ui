@@ -21,7 +21,7 @@ class AddRecord extends Component {
   };
 
   validateInputData = () => {    
-    const values = Object.values(this.state.inputData);    
+    const values = Object.values(this.state.inputData).map(str => str.trim());    
     return !values.includes('');
   };
 

@@ -18,7 +18,7 @@ class TableRow extends Component {
   };
 
   validateInputData = () => {    
-    const values = Object.values(this.state.data);    
+    const values = Object.values(this.state.data).map(str => str.trim());    
     return !values.includes('');
   };
 

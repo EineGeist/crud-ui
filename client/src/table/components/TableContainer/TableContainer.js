@@ -17,23 +17,9 @@ class TableContainer extends Component {
   ACTIONS_AMOUNT = 2;
 
   componentDidMount = async () => {
-    const records = await getRecords();
-    const columnLabels = this.getColumnLabels(records);
+    const [records, fields] = await getRecords();
+    const columnLabels = [...fields, ...Array(this.ACTIONS_AMOUNT).fill(null)];
     this.setState({ records, columnLabels });
-  };
-
-  getColumnLabels = records => {
-    const labels = new Set();
-
-    records.forEach(({ data }) => {
-      const keys = Object.keys(data);
-
-      for (let key of keys) {
-        labels.add(key);
-      }
-    });
-
-    return [...labels, ...Array(this.ACTIONS_AMOUNT).fill(null)];
   };
 
   addRecord = async data => {
