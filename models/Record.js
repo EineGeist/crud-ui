@@ -5,11 +5,11 @@ const RecordSchema = new Schema({
   data: {
     name: {
       type: String,
-      require: [true, 'Name is required'],
+      required: [true, 'Name is required'],
     },
     email: {
       type: String,
-      require: [true, 'Email is requierd'],
+      required: [true, 'Email is requierd'],
     },
   },
 });
